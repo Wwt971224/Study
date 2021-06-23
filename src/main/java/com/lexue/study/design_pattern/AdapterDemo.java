@@ -50,6 +50,5 @@ public class AdapterDemo {
         Adaptee adaptee = new Adaptee();
         Target objectAdapterTarget = new ObjectAdapter(adaptee);
         objectAdapterTarget.request();
-
     }
 }
