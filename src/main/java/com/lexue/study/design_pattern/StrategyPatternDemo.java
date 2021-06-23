@@ -5,6 +5,41 @@ package com.lexue.study.design_pattern;
  */
 public class StrategyPatternDemo {
 
+
+    interface Strategy {
+        void strategyMethod();
+    }
+
+    static class ConcreteStrategyA implements Strategy {
+
+        @Override
+        public void strategyMethod() {
+            System.out.println("ConcreteStrategyA is working");
+        }
+    }
+
+    static class ConcreteStrategyB implements Strategy {
+
+        @Override
+        public void strategyMethod() {
+            System.out.println("ConcreteStrategyB is working");
+        }
+    }
+
+    static class StrategyContext {
+
+        private final Strategy strategy;
+
+        public StrategyContext(Strategy strategy) {
+            this.strategy = strategy;
+        }
+
+        public void strategyMethod() {
+            strategy.strategyMethod();
+        }
+
+    }
+
     public static void main(String[] args) {
         StrategyContext strategyContext;
 
@@ -18,38 +53,5 @@ public class StrategyPatternDemo {
 
 }
 
-interface Strategy {
-    void strategyMethod();
-}
-
-class ConcreteStrategyA implements Strategy {
-
-    @Override
-    public void strategyMethod() {
-        System.out.println("ConcreteStrategyA is working");
-    }
-}
-
-class ConcreteStrategyB implements Strategy {
-
-    @Override
-    public void strategyMethod() {
-        System.out.println("ConcreteStrategyB is working");
-    }
-}
-
-class StrategyContext {
-
-    private final Strategy strategy;
-
-    public StrategyContext(Strategy strategy) {
-        this.strategy = strategy;
-    }
-
-    public void strategyMethod() {
-        strategy.strategyMethod();
-    }
-
-}
 
 

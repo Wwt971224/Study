@@ -11,6 +11,31 @@ import java.util.List;
  */
 public class PrototypeDemo {
 
+
+    @AllArgsConstructor
+    @Data
+    static class RealizeType implements Cloneable {
+
+        private int a;
+
+        private Integer integer;
+
+        private List<RealizeTypePro> realizeTypePros;
+
+        @Override
+        public RealizeType clone() throws CloneNotSupportedException {
+            return (RealizeType) super.clone();
+        }
+    }
+
+    @AllArgsConstructor
+    @Data
+    static class RealizeTypePro {
+
+        private String string;
+
+    }
+
     public static void main(String[] args) throws CloneNotSupportedException {
         RealizeType realizeType = new RealizeType(200, 200, Lists.newArrayList(new RealizeTypePro("a"), new RealizeTypePro("b")));
         RealizeType clone = realizeType.clone();
@@ -19,28 +44,4 @@ public class PrototypeDemo {
         System.out.println("realizeType.getInteger() == clone.getInteger() = " + (realizeType.getInteger() == clone.getInteger()));
         System.out.println("realizeType.getRealizeTypePros() == clone.getRealizeTypePros() = " + (realizeType.getRealizeTypePros() == clone.getRealizeTypePros()));
     }
-}
-
-@AllArgsConstructor
-@Data
-class RealizeType implements Cloneable{
-
-    private int a;
-
-    private Integer integer;
-
-    private List<RealizeTypePro> realizeTypePros;
-
-    @Override
-    public RealizeType clone() throws CloneNotSupportedException {
-        return (RealizeType) super.clone();
-    }
-}
-
-@AllArgsConstructor
-@Data
-class RealizeTypePro {
-
-    private String string;
-
 }

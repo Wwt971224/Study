@@ -1,4 +1,4 @@
-package com.lexue.study;
+package com.lexue.study.example;
 
 import java.util.ArrayList;
 import java.util.List;

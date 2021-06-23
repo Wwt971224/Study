@@ -7,6 +7,49 @@ import java.util.Objects;
  */
 public class SingletonDemo {
 
+    static class HungrySingleton {
+
+        private static final HungrySingleton hungrySingleton = new HungrySingleton();
+
+        private HungrySingleton() {
+
+        }
+
+        public static HungrySingleton getInstance() {
+            return hungrySingleton;
+        }
+
+        public void showMessage() {
+            System.out.println("hungrySingleton say 'Hello World'");
+        }
+
+    }
+
+    static class LazySingleton {
+
+        private static volatile LazySingleton lazySingleton;
+
+        private LazySingleton() {
+
+        }
+
+        public static LazySingleton getInstance() {
+            if (Objects.isNull(lazySingleton)) {
+                synchronized (LazySingleton.class) {
+                    if (Objects.isNull(lazySingleton)) {
+                        lazySingleton = new LazySingleton();
+                    }
+                }
+            }
+            return lazySingleton;
+        }
+
+        public void showMessage() {
+            System.out.println("lazySingleton say 'Hello World'");
+        }
+
+    }
+
     public static void main(String[] args) {
         HungrySingleton hungrySingleton = HungrySingleton.getInstance();
         hungrySingleton.showMessage();
@@ -16,45 +59,3 @@ public class SingletonDemo {
 
 }
 
-class HungrySingleton {
-
-    private static final HungrySingleton hungrySingleton = new HungrySingleton();
-
-    private HungrySingleton() {
-
-    }
-
-    public static HungrySingleton getInstance() {
-        return hungrySingleton;
-    }
-
-    public void showMessage() {
-        System.out.println("hungrySingleton say 'Hello World'");
-    }
-
-}
-
-class LazySingleton {
-
-    private static volatile LazySingleton lazySingleton;
-
-    private LazySingleton() {
-
-    }
-
-    public static LazySingleton getInstance() {
-        if (Objects.isNull(lazySingleton)) {
-            synchronized (LazySingleton.class) {
-                if (Objects.isNull(lazySingleton)) {
-                    lazySingleton = new LazySingleton();
-                }
-            }
-        }
-        return lazySingleton;
-    }
-
-    public void showMessage() {
-        System.out.println("lazySingleton say 'Hello World'");
-    }
-
-}
