@@ -1,7 +1,6 @@
 package com.lexue.study.design_pattern;
 
 import lombok.AllArgsConstructor;
-import org.checkerframework.checker.units.qual.A;
 
 /**
  * 适配器模式
