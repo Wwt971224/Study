@@ -1,6 +1,7 @@
 package com.lexue.study.design_pattern;
 
 import lombok.AllArgsConstructor;
+import org.checkerframework.checker.units.qual.A;
 
 /**
  * 适配器模式
@@ -18,8 +19,10 @@ public class AdapterDemo {
         }
     }
 
-    /* 类适配器 */
-    static class ClassAdapter extends Adaptee implements Target{
+    /**
+     * 类适配器
+     */
+    static class ClassAdapter extends Adaptee implements Target {
 
         @Override
         public void request() {
@@ -27,7 +30,6 @@ public class AdapterDemo {
         }
     }
 
-    /* 对象适配器 */
     @AllArgsConstructor
     static class ObjectAdapter implements Target {
 
@@ -42,13 +44,11 @@ public class AdapterDemo {
 
     public static void main(String[] args) {
         System.out.println("类适配器");
-        Target classAdapterTarget = new ClassAdapter();
-        classAdapterTarget.request();
-
-        System.out.println("==============================");
+        Target classAdapter = new ClassAdapter();
+        classAdapter.request();
+        System.out.println("===========================");
         System.out.println("对象适配器");
-        Adaptee adaptee = new Adaptee();
-        Target objectAdapterTarget = new ObjectAdapter(adaptee);
-        objectAdapterTarget.request();
+        Target objectAdapter = new ObjectAdapter(new Adaptee());
+        objectAdapter.request();
     }
 }
