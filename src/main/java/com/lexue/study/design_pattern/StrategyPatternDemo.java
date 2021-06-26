@@ -42,6 +42,7 @@ public class StrategyPatternDemo {
 
     public static void main(String[] args) {
         System.out.println("1");
+        System.out.println("2");
         StrategyContext strategyContext;
 
         strategyContext = new StrategyContext(new ConcreteStrategyA());
