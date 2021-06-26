@@ -8,6 +8,7 @@ public class FacadeDemo {
     static class SubSystem1 {
 
         public void method1() {
+            System.out.println("1");
             System.out.println("SubSystem1.method1 is running");
         }
     }
