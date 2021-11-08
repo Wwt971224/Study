@@ -1,8 +1,7 @@
 package com.lexue.study.other;
 
-import lombok.ToString;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.ListIterator;
 
 public class ListDemo {
 

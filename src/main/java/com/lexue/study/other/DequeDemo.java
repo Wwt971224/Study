@@ -1,6 +1,5 @@
 package com.lexue.study.other;
 
-import java.util.ArrayDeque;
 import java.util.Arrays;
 
 public class DequeDemo {
