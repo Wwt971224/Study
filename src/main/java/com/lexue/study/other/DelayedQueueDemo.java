@@ -1,6 +1,5 @@
 package com.lexue.study.other;
 
-import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.DelayQueue;
@@ -10,16 +9,15 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class DelayedQueueDemo {
 
-    @ToString
-    static class TestDelayed implements Delayed {
+    public static class TestDelay implements Delayed {
 
-        private String string;
+        private final String str;
 
-        private long time;
+        private final long time;
 
-        public TestDelayed(String string, Long time, TimeUnit unit) {
-            this.string = string;
-            this.time = System.currentTimeMillis() + (time > 0 ? unit.toMillis(time) : 0);
+        public TestDelay(String str, long time, TimeUnit timeUnit) {
+            this.str = str;
+            this.time = System.currentTimeMillis() + (time > 0 ? timeUnit.toMillis(time) : 0);
         }
 
         @Override
@@ -29,45 +27,32 @@ public class DelayedQueueDemo {
 
         @Override
         public int compareTo(Delayed o) {
-            TestDelayed work = (TestDelayed) o;
-            long diff = this.time - work.time;
-            if (diff <= 0) {
+            TestDelay work = (TestDelay) o;
+            if (this.time - work.time <= 0) {
                 return -1;
             } else {
                 return 1;
             }
         }
 
-        public String getString() {
-            return string;
+        public String getStr() {
+            return str;
         }
+
     }
 
-    static void test_delayed() throws InterruptedException {
-        DelayQueue<TestDelayed> delayQueue = new DelayQueue<>();
-        delayQueue.offer(new TestDelayed("aaa", 9L, TimeUnit.SECONDS));
-        delayQueue.offer(new TestDelayed("bbb", 8L, TimeUnit.SECONDS));
-        delayQueue.offer(new TestDelayed("ccc", 7L, TimeUnit.SECONDS));
-        delayQueue.offer(new TestDelayed("ddd", 6L, TimeUnit.SECONDS));
-        delayQueue.offer(new TestDelayed("eee", 5L, TimeUnit.SECONDS));
-        delayQueue.offer(new TestDelayed("fff", 4L, TimeUnit.SECONDS));
-        delayQueue.offer(new TestDelayed("ggg", 3L, TimeUnit.SECONDS));
-//        delayQueue.offer(new TestDelayed("hhh", 2L, TimeUnit.SECONDS));
-        System.out.println(delayQueue);
-        log.info(delayQueue.take().getString());
-        log.info(delayQueue.take().getString());
-        log.info(delayQueue.take().getString());
-        log.info(delayQueue.take().getString());
-        log.info(delayQueue.take().getString());
-        log.info(delayQueue.take().getString());
-        log.info(delayQueue.take().getString());
-//        log.info(delayQueue.take().getString());
-
+    public static void test_DelayQueue() throws InterruptedException {
+        DelayQueue<TestDelay> delayQueue = new DelayQueue<>();
+        delayQueue.offer(new TestDelay("aaa", 5, TimeUnit.SECONDS));
+        delayQueue.offer(new TestDelay("bbb", 1, TimeUnit.SECONDS));
+        delayQueue.offer(new TestDelay("ccc", 3, TimeUnit.SECONDS));
+        log.info(delayQueue.take().getStr());
+        log.info(delayQueue.take().getStr());
+        log.info(delayQueue.take().getStr());
     }
 
     public static void main(String[] args) throws InterruptedException {
-        test_delayed();
+        test_DelayQueue();
     }
-
 
 }
