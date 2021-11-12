@@ -1,6 +1,5 @@
 package com.lexue.study.other;
 
-import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.DelayQueue;
@@ -10,11 +9,11 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class DelayedQueueDemo {
 
-    static class TestDelay implements Delayed {
+    public static class TestDelay implements Delayed {
 
-        private String str;
+        private final String str;
 
-        private long time;
+        private final long time;
 
         public TestDelay(String str, long time, TimeUnit timeUnit) {
             this.str = str;
