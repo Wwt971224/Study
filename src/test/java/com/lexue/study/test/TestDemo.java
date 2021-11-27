@@ -2,7 +2,6 @@ package com.lexue.study.test;
 
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
-import org.apache.commons.lang.exception.ExceptionUtils;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
