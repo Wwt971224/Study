@@ -2,18 +2,12 @@ package com.lexue.study.test;
 
 import com.alibaba.fastjson.JSON;
 import com.lexue.study.spring.bean.B;
-import com.lexue.study.spring.config.MybatisPlusConfig;
+import com.lexue.study.spring.bean.E;
+import com.lexue.study.spring.bean.EFactoryBean;
 import com.lexue.study.spring.config.RootConfig;
 import com.lexue.study.spring.config.TxConfig;
-import com.lexue.study.spring.dao.entity.UserEntity;
-import com.lexue.study.spring.service.IUserService;
-import com.lexue.study.spring.service.impl.UserServiceImpl;
-import lombok.*;
 import org.junit.Test;
-import org.springframework.context.ApplicationEvent;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-
-import java.util.List;
 
 public class SpringTest {
 
@@ -27,12 +21,18 @@ public class SpringTest {
     }
 
     @Test
-    public void test2() {
+    public void test2() throws Exception {
         AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(TxConfig.class);
 //        UserServiceImpl userService = applicationContext.getBean(UserServiceImpl.class);
 //        userService.insertUser();
-        applicationContext.publishEvent(new ApplicationEvent("我发布的事件") {
-        });
+//        applicationContext.publishEvent(new ApplicationEvent("我发布的事件") {
+//        });
+        E bean = applicationContext.getBean(E.class);
+        System.out.println(bean);
+        E bean1 = applicationContext.getBean(E.class);
+        System.out.println(bean1);
+
+        System.out.println(bean==bean1);
     }
 
 
