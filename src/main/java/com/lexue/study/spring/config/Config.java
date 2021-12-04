@@ -3,6 +3,8 @@ package com.lexue.study.spring.config;
 import com.lexue.study.spring.bean.A;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 
 //@Configuration
 public class Config {
