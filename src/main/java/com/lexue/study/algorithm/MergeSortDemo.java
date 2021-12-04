@@ -24,6 +24,7 @@ public class MergeSortDemo {
             int mid = (left + right) >> 1;
             // 左边排序
             sort(arr, left, mid, temp);
+            // 右边排序
             sort(arr, mid + 1, right, temp);
             merge(arr, left, mid, right, temp);
         }
