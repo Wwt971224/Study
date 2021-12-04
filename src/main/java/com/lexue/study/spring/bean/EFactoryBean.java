@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import java.lang.reflect.Method;
 
 
-@Component
+//@Component
 public class EFactoryBean implements FactoryBean<E> {
     @Override
     public E getObject() throws Exception {
