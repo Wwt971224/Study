@@ -1,17 +1,14 @@
 package com.lexue.study.spring.aop;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.Signature;
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
-
-import java.util.concurrent.Executor;
 
 @Aspect
 public class LogAspect {
 
-    @Pointcut("execution(* com.lexue.study.spring.*.*(..))")
+    @Pointcut("execution(public * com.lexue.study.spring.bean.*.*(..))")
     public void pointCut() {
     }
 
@@ -36,4 +33,11 @@ public class LogAspect {
         System.out.println("方法执行异常，异常：" + exception);
     }
 
+    @Around("pointCut()")
+    public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
+        System.out.println("环绕通知进入");
+        Object proceed = joinPoint.proceed();
+        System.out.println("环绕通知退出");
+        return proceed;
+    }
 }

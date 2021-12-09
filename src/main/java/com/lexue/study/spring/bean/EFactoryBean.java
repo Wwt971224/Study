@@ -2,8 +2,6 @@ package com.lexue.study.spring.bean;
 
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.cglib.proxy.*;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
 

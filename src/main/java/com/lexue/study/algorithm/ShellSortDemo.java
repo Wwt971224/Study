@@ -2,6 +2,9 @@ package com.lexue.study.algorithm;
 
 import java.util.Arrays;
 
+/**
+ * 希尔排序
+ */
 public class ShellSortDemo {
 
     public static void main(String[] args) {
@@ -11,18 +14,17 @@ public class ShellSortDemo {
     }
 
     private static void shellSort(int[] arr) {
-        for (int gap = arr.length >> 1; gap > 0; gap = gap >> 1) {
+        for (int gap = arr.length - 1; gap > 0; gap = gap >> 1) {
             for (int i = gap; i < arr.length; i++) {
                 int j = i;
-                int temp;
-                if ((temp = arr[i]) < arr[j - gap]) {
-                    while (j - gap >= 0 && temp < arr[j - gap]) {
+                if (arr[j] < arr[j - gap]) {
+                    int temp = arr[j];
+                    while (j - gap >= 0 && arr[j] < arr[j - gap]) {
                         arr[j] = arr[j - gap];
-                        j -= gap;
+                        j = j - gap;
                     }
                     arr[j] = temp;
                 }
-
             }
         }
     }

@@ -1,7 +1,5 @@
 package com.lexue.study.spring.dao.repository;
 
-import com.lexue.study.spring.dao.entity.UserEntity;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 

@@ -2,11 +2,15 @@ package com.lexue.study.other;
 
 
 import com.alibaba.fastjson.JSON;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import org.springframework.cglib.proxy.InvocationHandler;
 import org.springframework.cglib.proxy.Proxy;
 
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class HelloWorld {
 
@@ -19,6 +23,7 @@ public class HelloWorld {
     }
 
     static class B extends A {
+
 
     }
 
@@ -37,17 +42,19 @@ public class HelloWorld {
 
 
     public static void main(String[] args) throws InterruptedException, MalformedURLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-
+//        List<? super A> l = new ArrayList<>();
+//        B b = new B();
+//        l.add(b);
+//        l.add(new A());
         String s1 = new String("1");
         String s2 = s1.intern();
         System.out.println(s1 == s2);
-
+//
         String s3 = new String("1") + new String("1");
         String s4 = s3.intern();
         System.out.println(s3 == s4);
-        ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
-        Class[] classes = {CircleTest.class};
-
+//        ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
+//        Class[] classes = {CircleTest.class};
 
 
 //        System.out.println((RUNNING < SHUTDOWN));

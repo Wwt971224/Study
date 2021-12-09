@@ -1,7 +1,10 @@
 package com.lexue.study.other;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ListIterator;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class ListDemo {
 
@@ -24,7 +27,10 @@ public class ListDemo {
 //        objects.add(2);
 //        System.out.println("objects.size() = " + objects.size());
 
-//        int[] a = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+        int[] a = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+        int[] newArr = new int[a.length + (a.length >> 1)];
+        System.arraycopy(a, 0, newArr, 2, a.length);
+        System.out.println(Arrays.toString(newArr));
 //        int[] b = new int[11];
 //        System.arraycopy(a, 0, b, 0, a.length);
 //        a = b;
