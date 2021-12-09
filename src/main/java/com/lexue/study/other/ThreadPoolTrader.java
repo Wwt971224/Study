@@ -1,19 +1,29 @@
 package com.lexue.study.other;
 
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.Executor;
-import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class ThreadPoolTrader implements Executor {
 
-    private final AtomicInteger ctl = new AtomicInteger(0);
+    private static final int COUNT_BITS = Integer.SIZE - 3;
+    private static final int CAPACITY   = (1 << COUNT_BITS) - 1;
 
-    private volatile int corePoolSize;
-    private volatile int maximumPoolSize;
+    // runState is stored in the high-order bits
+    private static final int RUNNING    = -1 << COUNT_BITS;
+    private static final int SHUTDOWN   =  0 << COUNT_BITS;
+    private static final int STOP       =  1 << COUNT_BITS;
+    private static final int TIDYING    =  2 << COUNT_BITS;
+    private static final int TERMINATED =  3 << COUNT_BITS;
 
-    private final BlockingQueue<Runnable> workQueue;
+    // 线程中活跃的线程数
+    private AtomicInteger ctl = new AtomicInteger(0);
+
+    private int corePoolSize;
+
+    private int maximumPoolSize;
+
+    private BlockingQueue<Runnable> workQueue;
+
 
     public ThreadPoolTrader(int corePoolSize, int maximumPoolSize, BlockingQueue<Runnable> workQueue) {
         this.corePoolSize = corePoolSize;
@@ -23,12 +33,10 @@ public class ThreadPoolTrader implements Executor {
 
     @Override
     public void execute(Runnable command) {
-        int c = ctl.get();
-        if (c < corePoolSize) {
-            if (!addWorker(command, true)) {
-                reject();
+        if (ctl.get() <= corePoolSize) {
+            if (addWorker(command, true)) {
+                return;
             }
-            return;
         }
         if (!workQueue.offer(command)) {
             if (!addWorker(command, false)) {
@@ -37,85 +45,87 @@ public class ThreadPoolTrader implements Executor {
         }
     }
 
-    private boolean addWorker(Runnable firstTask,boolean core) {
+    public void reject() {
+        throw new RuntimeException("Error! maximumPoolSize = " + maximumPoolSize + " workQueue.size() = " + workQueue.size());
+    }
+
+    public boolean addWorker(Runnable runnable, boolean core) {
         if (ctl.get() >= (core ? corePoolSize : maximumPoolSize)) {
             return false;
         }
-        Worker worker = new Worker(firstTask);
+        // 往线程池去添加线程
+        Worker worker = new Worker(runnable);
         worker.thread.start();
         ctl.incrementAndGet();
         return true;
     }
 
-    private void reject() {
-        throw new RuntimeException("Error！ctl.count：" + ctl.get() + " workQueue.size：" + workQueue.size());
-    }
-
-    private Runnable getTask() {
+    public Runnable getTask() {
         for (; ; ) {
-            try {
-                System.out.println("workQueue.size：" + workQueue.size());
-                if (!workQueue.isEmpty() || ctl.get() <= corePoolSize) {
+            if (!workQueue.isEmpty() || ctl.get() <= corePoolSize) {
+                try {
                     return workQueue.take();
-                } else {
-                    return null;
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            } else {
+                return null;
             }
         }
     }
 
-    private void runWorker(Worker w) {
-        Runnable task = w.firstTask;
+    public void runWork(Worker worker) {
+        Runnable runnable = worker.firstTask;
         try {
-            while (task != null || (task = getTask()) != null) {
-                task.run();
-                task = null;
+            while (runnable != null || (runnable = getTask()) != null) {
+                runnable.run();
+                runnable = null;
             }
         } finally {
             ctl.decrementAndGet();
         }
     }
 
-    private final class Worker implements Runnable {
+    public class Worker implements Runnable {
 
-        final Thread thread;
+        private Thread thread;
+        private Runnable firstTask;
 
-        Runnable firstTask;
-
-        private Worker(Runnable firstTask) {
+        public Worker(Runnable firstTask) {
             this.thread = new Thread(this);
             this.firstTask = firstTask;
         }
 
         @Override
         public void run() {
-            runWorker(this);
+            runWork(this);
         }
-
     }
+
 
     public static void main(String[] args) throws InterruptedException {
-        ThreadPoolTrader threadPoolTrader = new ThreadPoolTrader(2, 10, new ArrayBlockingQueue<>(10));
+//        ThreadPoolTrader threadPoolTrader = new ThreadPoolTrader(2, 10, new ArrayBlockingQueue<>(29));
+//        for (int i = 0; i < 40; i++) {
+//
+//            int finalI = i;
+//            threadPoolTrader.execute(() -> {
+//                System.out.println("工作编号" + finalI + " 正在执行");
+////                try {
+////                    Thread.sleep(2000);
+////                } catch (InterruptedException e) {
+////                    e.printStackTrace();
+////                }
+//            });
+//        }
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
 
-        for (int i = 0; i < 40; i++) {
-            int finalI = i;
-            threadPoolTrader.execute(() -> {
-                try {
-                    Thread.sleep(1500);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                System.out.println("任务编号：" + finalI);
-            });
-        }
-
-        Thread.sleep(10000);
-        System.out.println("===========================");
-        System.out.println(threadPoolTrader.corePoolSize);
-        System.out.println(threadPoolTrader.maximumPoolSize);
-        System.out.println(threadPoolTrader.ctl.get());
+            }
+        };
+        runnable.run();
+        Thread thread = new Thread();
+        thread.start();
+        thread.run();
     }
-
 }

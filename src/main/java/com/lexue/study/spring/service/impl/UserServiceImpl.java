@@ -1,7 +1,6 @@
 package com.lexue.study.spring.service.impl;
 
 import com.lexue.study.spring.dao.repository.UserDao;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

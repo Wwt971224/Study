@@ -1,7 +1,6 @@
 package com.lexue.study.spring.config;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
-import com.mysql.cj.jdbc.JdbcConnection;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -12,7 +11,6 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
-import java.beans.PropertyVetoException;
 
 @Import(MyImportBeanDefinitionRegistrar.class)
 @EnableTransactionManagement

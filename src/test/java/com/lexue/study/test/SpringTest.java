@@ -1,9 +1,7 @@
 package com.lexue.study.test;
 
-import com.alibaba.fastjson.JSON;
 import com.lexue.study.spring.bean.B;
 import com.lexue.study.spring.bean.E;
-import com.lexue.study.spring.bean.EFactoryBean;
 import com.lexue.study.spring.config.RootConfig;
 import com.lexue.study.spring.config.TxConfig;
 import org.junit.Test;
