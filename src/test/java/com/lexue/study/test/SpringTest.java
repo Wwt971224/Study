@@ -1,6 +1,8 @@
 package com.lexue.study.test;
 
 import com.lexue.study.spring.bean.B;
+import com.lexue.study.spring.bean.C;
+import com.lexue.study.spring.bean.D;
 import com.lexue.study.spring.bean.E;
 import com.lexue.study.spring.config.RootConfig;
 import com.lexue.study.spring.config.TxConfig;
@@ -12,10 +14,15 @@ public class SpringTest {
     @Test
     public void test1() {
         AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(RootConfig.class);
-        B bean = applicationContext.getBean(B.class);
-        int div = bean.div(1, 1);
-        System.out.println(div);
-        applicationContext.getApplicationName();
+//        B bean = applicationContext.getBean(B.class);
+        C bean = applicationContext.getBean(C.class);
+        D d = applicationContext.getBean(D.class);
+
+//        int div = bean.div(1, 1);
+//        System.out.println(div);
+//        applicationContext.getApplicationName();
+        System.out.println(bean.getD());
+
     }
 
     @Test

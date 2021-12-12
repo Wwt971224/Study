@@ -10,4 +10,8 @@ public class D {
     @Resource
     private C c;
 
+    public void say() {
+
+    }
+
 }

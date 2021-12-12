@@ -6,12 +6,12 @@ package com.lexue.study.algorithm;
 public class FindKelem {
 
     public static Node findNode(Node head, int index) {
-        Node temp = head;
+        Node tempHead = head;
         for (int i = 0; i < index; i++) {
-            temp = temp.next;
+            tempHead = tempHead.next;
         }
-        while (temp != null) {
-            temp = temp.next;
+        while (tempHead != null) {
+            tempHead = tempHead.next;
             head = head.next;
         }
         return head;
